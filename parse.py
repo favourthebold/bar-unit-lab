@@ -39,17 +39,32 @@ for id,u in catalog.items():
   if names and nums:
    key=names[0].text().lower().strip();v=number(nums[0].text())
    if v is not None:u['stats'][key]=v;keys[key]=keys.get(key,0)+1
+ u['ranges']={}
  for w in root.find('uw-item'):
   names=w.find('uw-weaponname');weapon={'name':names[0].text() if names else ''}
   for n in w.find('uw-weapon-stats'):
+   if 'w-condition-invisible' in n.a.get('class',''):continue
+   falloff=re.search(r'Weapon does\s+([\d.]+)% damage at max\. range',n.text())
+   if falloff:weapon['range_damage_factor']=float(falloff.group(1))/100
    fields=n.find('uw-stats-text')
    if len(fields)>1:
     v=number(fields[0].text());key=fields[1].text().strip().lower()
     if v is not None:weapon[key]=v
   if len(weapon)>1:u['weapons'].append(weapon)
+ damage_weapons=[w for w in u['weapons'] if w.get('dps',0)>0]
+ if any(w.get('range_damage_factor',1)<1 for w in damage_weapons) and 'dps' in u['stats']:
+  total=sum(w['dps'] for w in damage_weapons)
+  low=sum(w['dps']*w.get('range_damage_factor',1) for w in damage_weapons)
+  factors={w.get('range_damage_factor',1) for w in damage_weapons}
+  u['ranges']['dps']={'min':u['stats']['dps']*low/total,'max':u['stats']['dps'],'estimated':len(factors)>1 or abs(total-u['stats']['dps'])>max(1,total*.01),'basis':'Published weapon falloff applied to unit DPS; mixed weapons weighted by published weapon DPS. Bounds are a weapon-output envelope, not damage at one shared distance.'}
+ for w in u['weapons']:
+  if w.get('range_damage_factor',1)<1:
+   w['ranges']={k:{'min':w[k]*w['range_damage_factor'],'max':w[k]} for k in ('dps','alpha') if k in w}
  for key in ('reload','salvo','alpha','aoe'):
   vs=[w[key] for w in u['weapons'] if key in w]
   if vs:u['stats']['weapon_'+key]=max(vs)
+  if key=='alpha' and vs and any('alpha' in w.get('ranges',{}) for w in u['weapons']):
+   u['ranges']['weapon_alpha']={'min':max(w.get('ranges',{}).get('alpha',{}).get('min',w['alpha']) for w in u['weapons'] if 'alpha' in w),'max':max(vs),'estimated':False}
  if not u['name']:raise Exception('Missing name '+id)
  units.append(u)
 Path('dist/data.json').write_text(json.dumps({'source':'https://www.beyondallreason.info','retrieved':'2026-11-14','units':units},ensure_ascii=False),encoding='utf8')
