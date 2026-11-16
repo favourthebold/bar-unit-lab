@@ -1,4 +1,5 @@
 import json,re
+from datetime import date
 from pathlib import Path
 from html.parser import HTMLParser
 class Node:
@@ -69,5 +70,5 @@ for id,u in catalog.items():
    u['ranges']['weapon_alpha']={'min':max(w.get('ranges',{}).get('alpha',{}).get('min',w['alpha']) for w in u['weapons'] if 'alpha' in w),'max':max(vs),'estimated':False}
  if not u['name']:raise Exception('Missing name '+id)
  units.append(u)
-Path('dist/data.json').write_text(json.dumps({'source':'https://www.beyondallreason.info','retrieved':'2026-11-14','units':units},ensure_ascii=False),encoding='utf8')
+Path('dist/data.json').write_text(json.dumps({'source':'https://www.beyondallreason.info','retrieved':date.today().isoformat(),'units':units},ensure_ascii=False),encoding='utf8')
 print(json.dumps({'units':len(units),'fields':keys,'pawn':next(u for u in units if u['id']=='armpw')},indent=2))
