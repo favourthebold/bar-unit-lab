@@ -32,6 +32,7 @@ for id,u in catalog.items():
  def first(cls):
   a=root.find(cls);return a[0].text() if a else ''
  u.update(name=first('us-unitname'),role=first('us-text'),tier=first('techlevel'),stats={},weapons=[],url='https://www.beyondallreason.info/unit/'+id)
+ if u['role'] in ('Commander','Decoy Commander'):u['category']='commanders'
  imgs=root.find('unit-img-detail');u['image']=next((x.a.get('src','') for x in imgs if 'w-condition-invisible' not in x.a.get('class','')),'')
  for n in root.find('us-stats-item'):
   if 'w-condition-invisible' in n.a.get('class',''):continue
