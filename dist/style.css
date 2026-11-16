@@ -4,3 +4,5 @@
 .range-note{font-size:11px;line-height:1.6;color:var(--muted);padding:8px 24px 15px}.range-track{position:relative;display:block;overflow:hidden}.range-track .range-extent,.range-track .range-solid{position:absolute;left:0;top:0;height:100%;background:var(--c);display:block}.range-track .range-extent{opacity:.3}.range-track .range-solid{opacity:.9}.barrow{grid-template-columns:160px 1fr 120px}.barvalue{font-size:11px;white-space:nowrap}.cardstats b{font-size:14px}@media(max-width:760px){.barrow{grid-template-columns:95px minmax(30px,1fr) 100px;gap:7px}.barvalue{font-size:10px}.range-note{padding:8px 12px 12px;font-size:10px}}
 
 .chartheading p{font-size:12px;line-height:1.65;max-width:660px;color:#b8c7d6}
+
+.axes.ranked #xControl{display:none}.axes.ranked label:has(#y){order:1}.axes.ranked #swap{order:2}.axes.ranked .divide{order:3}.axes.ranked .check{order:4}.sort-controls{display:flex;justify-content:flex-end;padding:12px 25px 0}.sort-controls:has([hidden]){display:none}#sortOrder{font-size:12px}#swap:disabled{opacity:.4;cursor:default}@media(max-width:760px){.axes.ranked .divide{flex-basis:0!important;min-width:0!important}.sort-controls{padding:12px 14px 0}}
