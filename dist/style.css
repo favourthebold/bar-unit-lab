@@ -11,3 +11,16 @@
 .tooltip.hovercard div{margin:0}.tooltip.hovercard b{float:none;margin:0;color:#edf2f7}.hover-header{display:flex;gap:10px;align-items:center;padding-bottom:10px;border-bottom:1px solid var(--border)}.hover-header img{width:56px;height:56px;object-fit:contain;flex-shrink:0}.tooltip.hovercard strong{font-size:16px;line-height:1.25;display:block;color:var(--c)}.tooltip.hovercard p{font-size:11px;margin:5px 0 0;line-height:1.4}.hover-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px 16px;padding:11px 0}.hover-stats span{display:block;color:var(--muted);font-size:10px;margin-bottom:3px}.hover-stats b{font-size:13px;font-weight:500}.hover-current{padding-top:10px;border-top:1px solid var(--border)}.hover-current>div{display:flex;justify-content:space-between;gap:12px;padding:3px 0;font-size:11px}.hover-current span{color:var(--muted)}.tooltip.hovercard .hover-foot{margin-top:9px;color:#8293a5;font-size:10px}
 
 #removeDialog{max-width:360px;padding:24px}#removeDialog h2{font-size:20px;margin:0 0 12px}#removeDialog p{font-size:13px}.remove-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:20px}.remove-actions button{min-height:44px;padding:10px 16px}#confirmRemove{border-color:#f46b70;color:#ff9b9f}
+
+/* Mobile workspace navigation; desktop retains the full comparison layout. */
+.mobile-nav{display:none}
+@media(max-width:760px){
+ .mobile-nav{display:grid;grid-template-columns:repeat(3,1fr);position:sticky;top:0;z-index:8;background:var(--bg);padding:8px 12px;gap:6px;border-bottom:1px solid var(--border)}
+ .mobile-nav button{min-height:46px;background:none;color:var(--muted);font-size:13px}
+ .mobile-nav button[aria-pressed="true"]{background:#26323f;border-color:#d8f28175;color:var(--accent)}
+ body[data-mobile-panel="selection"] main,body:not([data-mobile-panel="selection"]) #selectionPanel,
+ body[data-mobile-panel="cards"] #displayPanel,body[data-mobile-panel="display"] #cardsPanel{display:none}
+ #cardsPanel{margin-top:0}
+ #selectionPanel{border-bottom:0}
+ main{padding-top:18px}
+}
