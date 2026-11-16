@@ -1,5 +1,5 @@
 'use strict';
-const $=id=>document.getElementById(id),colors={Armada:'#56baff',Cortex:'#ff9173',Legion:'#72d986'};
+const $=id=>document.getElementById(id),colors={Armada:'#56baff',Cortex:'#f46b70',Legion:'#72d986'};
 const labels={metal:'Metal cost',energy:'Energy cost','build time':'Build time',health:'Health',speed:'Speed',sight:'Sight range',dps:'DPS',range:'Weapon range',buildpower:'Build power',weapon_reload:'Max weapon reload (s)',weapon_salvo:'Max weapon salvo',weapon_alpha:'Max weapon alpha',weapon_aoe:'Max weapon AOE'};
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const name=k=>labels[k]||k.replace(/\b\w/g,c=>c.toUpperCase());
